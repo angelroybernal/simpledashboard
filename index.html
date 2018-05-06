@@ -1,0 +1,76 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Panel</title>
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/starter-template/">
+
+    <!-- Bootstrap core CSS -->
+    <link href="resources/css/bootstrap.min.css" rel="stylesheet">
+
+  </head>
+
+  <body style="padding-top: 15%">
+
+    <nav class="navbar navbar-toggleable-md navbar-inverse bg-inverse fixed-top">
+      <a class="navbar-brand" href="#" id="navbar-brand">Panel</a>
+    </nav>
+
+    <div class="container">
+
+      <div class="starter-template">
+        <h1 id="greet">Hi</h1>
+        <p class="lead">Use this document as a way to quickly start any new project.<br> All you get is this text and a mostly barebones HTML document.</p>
+        <h2>Weather:</h2>
+        <a class="weatherwidget-io" href="https://forecast7.com/en/8d46n80d29/juan-diaz/" data-label_1="JUAN DÍAZ" data-label_2="WEATHER" data-font="Noto Sans" data-theme="pure" >JUAN DÍAZ WEATHER</a>
+      </div>
+
+    </div><!-- /.container -->
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+    <script src="resources/js/bootstrap.min.js"></script>
+    <script src="resources/js/moment.min.js"></script>
+    <script type="text/javascript">
+    function getGreetingTime (m) {
+        var g = null; //return g
+
+        if(!m || !m.isValid()) { return; } //if we can't find a valid or filled moment, we return.
+            var split_afternoon = 12 //24hr time to split the afternoon
+            var split_evening = 17 //24hr time to split the evening
+            var currentHour = parseFloat(m.format("HH"));
+
+            if(currentHour >= split_afternoon && currentHour <= split_evening) {
+                g = "afternoon";
+            } else if(currentHour >= split_evening) {
+                g = "evening";
+            } else {
+                g = "morning";
+            }
+            return g;
+}
+    //The var "humanizedGreeting" below will equal (assuming the time is 8pm) "Good evening, James."
+    </script>
+    <script type="text/javascript">
+        var humanizedGreeting = "Good " + getGreetingTime(moment()) + ", Angel.";
+        $(document).ready(function() {
+            document.getElementById('navbar-brand').text = moment().format('MMMM Do YYYY, h:mm:ss a');
+            document.getElementById('greet').innerHTML = humanizedGreeting;
+
+        });
+    </script>
+    <script>
+        !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src='https://weatherwidget.io/js/widget.min.js';fjs.parentNode.insertBefore(js,fjs);}}(document,'script','weatherwidget-io-js');
+    </script>
+  </body>
+</html>
