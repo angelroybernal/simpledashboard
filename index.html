@@ -25,8 +25,9 @@
 
       <div class="starter-template">
         <h1 id="greet">Hi</h1>
-        <p class="lead">Use this document as a way to quickly start any new project.<br> All you get is this text and a mostly barebones HTML document.</p>
-        <h2>Weather:</h2>
+        <p class="lead" id="quote">123...</p>
+        <p class="text-muted" id="author" style="text-align : right;"></p>
+        <h3>Weather:</h3>
         <a class="weatherwidget-io" href="https://forecast7.com/en/8d46n80d29/juan-diaz/" data-label_1="JUAN DÍAZ" data-label_2="WEATHER" data-font="Noto Sans" data-theme="pure" >JUAN DÍAZ WEATHER</a>
       </div>
 
@@ -36,19 +37,20 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
     <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
     <script src="resources/js/bootstrap.min.js"></script>
     <script src="resources/js/moment.min.js"></script>
     <script type="text/javascript">
-    function getGreetingTime (m) {
-        var g = null; //return g
+    //Based on https://gist.github.com/James1x0/8443042
+        function getGreetingTime (m) {
+            var g = null; //return g
 
-        if(!m || !m.isValid()) { return; } //if we can't find a valid or filled moment, we return.
-            var split_afternoon = 12 //24hr time to split the afternoon
-            var split_evening = 17 //24hr time to split the evening
-            var currentHour = parseFloat(m.format("HH"));
+            if(!m || !m.isValid()) { return; } //if we can't find a valid or filled moment, we return.
+                var split_afternoon = 12 //24hr time to split the afternoon
+                var split_evening = 17 //24hr time to split the evening
+                var currentHour = parseFloat(m.format("HH"));
 
             if(currentHour >= split_afternoon && currentHour <= split_evening) {
                 g = "afternoon";
@@ -58,15 +60,46 @@
                 g = "morning";
             }
             return g;
-}
-    //The var "humanizedGreeting" below will equal (assuming the time is 8pm) "Good evening, James."
+        };
     </script>
     <script type="text/javascript">
-        var humanizedGreeting = "Good " + getGreetingTime(moment()) + ", Angel.";
+        function displayTime() {
+            var time = moment().format('MMMM Do YYYY, h:mm:ss a');
+            $('#navbar-brand').html(time);
+            setTimeout(displayTime, 1000);
+        }
+    </script>
+    <script type="text/javascript">
+        function humanizedGreeting() {
+            var greet = "Good " + getGreetingTime(moment()) + ", Angel.";
+            $('#greet').html(greet);
+            setTimeout(humanizedGreeting, 1000000);
+        }
+    </script>
+    <script type="text/javascript">
+        function getQuoteofTheDay (){
+            $.ajax({
+                method : "GET",
+                url : "http://quotes.rest/qod.json",
+                dataType : "json",
+                success : function(data){
+                    //console.log(data.contents.quotes[0].q);
+                    quoteOTD = {
+                        quote : data.contents.quotes[0].quote,
+                        author : data.contents.quotes[0].author
+                    };
+                    $('#quote').html(quoteOTD.quote);
+                    $('#author').html(quoteOTD.author);
+                    setTimeout(getQuoteofTheDay, 1000000);
+                }
+            });
+        };
+    </script>
+    <script type="text/javascript">
         $(document).ready(function() {
-            document.getElementById('navbar-brand').text = moment().format('MMMM Do YYYY, h:mm:ss a');
-            document.getElementById('greet').innerHTML = humanizedGreeting;
-
+            humanizedGreeting();
+            displayTime();
+            getQuoteofTheDay();
         });
     </script>
     <script>
