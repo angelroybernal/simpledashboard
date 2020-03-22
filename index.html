@@ -110,7 +110,7 @@
     </script>
     <script>
     $(document).ready(function() {
-        $.getJSON('https://json.geoiplookup.io/api?callback=?', function(data) {
+        $.getJSON('https://api.ipify.org?format=json', function(data) {
             var addressData = $.parseJSON(JSON.stringify(data, null, 2));
             var showData = $(address).html() + '<span style="color:#009688">' + addressData.ip + '</span>';
             $(address).html(showData);
